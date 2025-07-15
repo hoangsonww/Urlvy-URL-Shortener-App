@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  urlvy-pg:
+    image: postgres:15
+    container_name: urlvy-pg
+    restart: always
+    environment:
+      POSTGRES_USER: urlvy
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: urlvydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - urlvy-net
+
+  urlvy-backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: urlvy-backend
+    restart: always
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://urlvy:password@urlvy-pg:5432/urlvydb
+    depends_on:
+      - urlvy-pg
+    networks:
+      - urlvy-net
+
+  urlvy-frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: urlvy-frontend
+    restart: always
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - urlvy-backend
+    networks:
+      - urlvy-net
+
+  urlvy-nginx:
+    image: nginx:alpine
+    container_name: urlvy-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - urlvy-frontend
+      - urlvy-backend
+    networks:
+      - urlvy-net
+
+volumes:
+  pgdata:
+
+networks:
+  urlvy-net:
+    driver: bridge

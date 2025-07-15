@@ -38,6 +38,7 @@
 ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black)
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=flat-square&logo=eslint&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
 
 ## 📑 Table of Contents
 
@@ -383,16 +384,41 @@ The CI/CD configuration is defined in `.github/workflows/workflow.yml`. You can 
 
 ## 🐳 Docker & Compose
 
+### Docker
+
+Urlvy provides a Docker setup for both development and production environments. This allows you to run the application in isolated containers, making it easy to manage dependencies and configurations.
+
+We have two main Docker Compose files:
+
+- `compose.dev.yml` – for local development (includes web, api, and pg)
+- `compose.prod.yml` – for production deployment (includes web, api, pg, and Nginx)
+
+To run, use:
+
 ```bash
 docker compose up        # dev: web + api + pg
 docker compose -f compose.prod.yml up --build  # prod
 ```
 
-Images:
+It will start the following services:
 
-- `urlvy-api` – NestJS
-- `urlvy-web` – Next.js static export (served by Nginx)
+- `urlvy-backend` – NestJS
+- `urlvy-frontend` – Next.js static export (served by Nginx)
 - `urlvy-pg` – Postgres 15 w/ init script
+
+The production setup also includes an Nginx reverse proxy to serve the frontend and API securely.
+
+### Kubernetes
+
+For Kubernetes users, we provide a `kubernetes/` directory with example manifests to deploy Urlvy on a Kubernetes cluster. This includes:
+
+- Deployment manifests for the frontend and backend
+- Service definitions for exposing the applications
+- Ingress configuration for routing traffic
+- PersistentVolumeClaims for PostgreSQL data storage
+- and more...
+
+Feel free to adapt these manifests to your cluster's requirements. You can use tools like `kubectl` or `Helm` to deploy Urlvy on Kubernetes.
 
 ---
 
