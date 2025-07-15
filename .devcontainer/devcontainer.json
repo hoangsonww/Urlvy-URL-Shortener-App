@@ -1,0 +1,31 @@
+{
+  "name": "PetSwipe Fullstack Dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+
+  // Needed so your container can spin up docker-compose on the host
+  "runArgs": ["--init", "-v", "/var/run/docker.sock:/var/run/docker.sock"],
+
+  // Mount your project into /workspace
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+
+  // Recommended extensions
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode.vscode-typescript-next"
+  ],
+
+  // Forward the ports your stack uses
+  "forwardPorts": [3000, 5001, 5432],
+
+  // After the container is built, install deps everywhere
+  "postCreateCommand": "npm install && cd backend && npm install --legacy-peer-deps && cd ../frontend && npm install --legacy-peer-deps",
+
+  // Use the `node` user that the base image provides
+  "remoteUser": "node"
+}

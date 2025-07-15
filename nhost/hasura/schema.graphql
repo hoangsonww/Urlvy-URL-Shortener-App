@@ -1,0 +1,41 @@
+scalar timestamptz
+scalar uuid
+
+type user {
+    id: uuid!
+    email: String!
+    created_at: timestamptz!
+}
+
+type url {
+    id: uuid!
+    slug: String!
+    destination: String!
+    summary: String
+    owner_id: uuid!
+    created_at: timestamptz!
+    clicks: [click!]!
+}
+
+type click {
+    id: uuid!
+    url_id: uuid!
+    ip: String!
+    user_agent: String!
+    created_at: timestamptz!
+}
+
+type Query {
+    urls(owner_id: uuid!): [url!]!
+    clicks(url_id: uuid!): [click!]!
+}
+
+type Mutation {
+    createUrl(destination: String!, slug: String): url!
+    chatStats(slug: String!, question: String!): String!
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: NestJS API on ECS Fargate
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: urlvy-cluster
+  ServiceName:
+    Type: String
+    Default: urlvy-api
+  ContainerImage:
+    Type: String
+    Description: e.g. <AWS_ACCOUNT>.dkr.ecr.<REGION>.amazonaws.com/urlvy-api:latest
+  DesiredCount:
+    Type: Number
+    Default: 2
+  DBEndpoint:
+    Type: String
+    Description: RDS endpoint (host:port)
+  DBUsername:
+    Type: String
+  DBPassword:
+    Type: String
+    NoEcho: true
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+  SecurityGroupIds:
+    Type: List<AWS::EC2::SecurityGroup::Id>
+
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref ClusterName
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: urlvy-api-task
+      Cpu: '512'
+      Memory: '1024'
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: api
+          Image: !Ref ContainerImage
+          PortMappings:
+            - ContainerPort: 5001
+          Environment:
+            - Name: DATABASE_URL
+              Value: !Join ['', ['postgres://', !Ref DBUsername, ':', !Ref DBPassword, '@', !Ref DBEndpoint, '/urlvy_db']]
+            - Name: JWT_SECRET
+              Value: !Ref JWTSecret
+            - Name: GOOGLE_API_KEY
+              Value: !Ref GoogleApiKey
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref ServiceName
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      DesiredCount: !Ref DesiredCount
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups: !Ref SecurityGroupIds
+          Subnets: !Ref SubnetIds

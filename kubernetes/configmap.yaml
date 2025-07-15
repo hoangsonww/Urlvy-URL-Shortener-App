@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urlvy-config
+  namespace: urlvy
+data:
+  NEXT_PUBLIC_API: "/api"

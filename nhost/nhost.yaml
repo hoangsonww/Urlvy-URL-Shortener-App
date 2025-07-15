@@ -1,0 +1,27 @@
+version: 2
+
+backend:
+  engine: hasura
+  postgres:
+    host: localhost
+    port: 5432
+    database: urlvy_db
+    user: urlvy
+    password: password
+  auth:
+    issuer: http://localhost:1337/auth/v1
+    jwks_uri: http://localhost:1337/auth/v1/jwks
+    admin_secret: ${AUTH_ADMIN_SECRET}
+  storage:
+    bucket:
+      - name: static
+
+hasura:
+  metadataDirectory: hasura/metadata
+  migrationsDirectory: hasura/migrations
+
+functions:
+  - name: aiSummary
+    path: ./functions/ai-summary
+  - name: statsBot
+    path: ./functions/stats-bot

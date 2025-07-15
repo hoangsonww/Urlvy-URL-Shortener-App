@@ -1,0 +1,4 @@
+web/.next
+web/node_modules
+api/dist
+api/node_modules

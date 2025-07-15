@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: urlvy-ingress
+  namespace: urlvy
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: urlvy.app
+      http:
+        paths:
+          # API on /api/*
+          - path: /api(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: urlvy-api
+                port:
+                  number: 80
+          # Web on /
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: urlvy-web
+                port:
+                  number: 80

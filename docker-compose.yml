@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: urlvy_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: urlvy
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: urlvy_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: urlvy_api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://urlvy:password@db:5432/urlvy_db
+      JWT_SECRET: your_jwt_secret
+      GOOGLE_API_KEY: your_google_api_key
+    ports:
+      - "5001:5001"
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: urlvy_web
+    restart: always
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API: http://localhost:5001
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:

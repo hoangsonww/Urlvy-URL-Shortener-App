@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urlvy-web
+  namespace: urlvy
+  labels:
+    app: urlvy-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: urlvy-web
+  template:
+    metadata:
+      labels:
+        app: urlvy-web
+    spec:
+      containers:
+        - name: web
+          image: <YOUR_REGISTRY>/urlvy-web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: urlvy-config

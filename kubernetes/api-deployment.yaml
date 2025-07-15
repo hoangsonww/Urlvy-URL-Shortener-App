@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urlvy-api
+  namespace: urlvy
+  labels:
+    app: urlvy-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: urlvy-api
+  template:
+    metadata:
+      labels:
+        app: urlvy-api
+    spec:
+      containers:
+        - name: api
+          image: <YOUR_REGISTRY>/urlvy-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+          envFrom:
+            - secretRef:
+                name: urlvy-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 10
+            periodSeconds: 5

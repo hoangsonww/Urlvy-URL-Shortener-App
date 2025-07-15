@@ -1,0 +1,16 @@
+type: action
+name: createUrl
+definition:
+  kind: synchronous
+  handler: ${NHOST_FUNCTIONS_URL}/ai-summary
+  arguments:
+    - name: destination
+      type: String!
+    - name: slug
+      type: String
+  output_type: url
+permissions:
+  - role: user
+    permission:
+      access: full
+      comment: allow logged-in users

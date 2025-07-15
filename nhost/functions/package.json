@@ -1,0 +1,8 @@
+{
+  "name": "urlvy-nhost-functions",
+  "version": "1.0.0",
+  "dependencies": {
+    "@google/generativeai": "^1.0.0",
+    "node-fetch": "^2.6.7"
+  }
+}

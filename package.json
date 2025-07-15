@@ -1,0 +1,20 @@
+{
+  "name": "urlvy-link-shortener-app",
+  "version": "1.0.0",
+  "description": "**Urlvy** transforms long, ugly URLs into memorable slugs, enriches them with **Gemini-powered** summaries and tracks every click in real-time. Share, analyse, and chat with an AI analyst about your traffic – all in one slick workspace.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "lint": "npm run check && npm run format",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,scss,md,html}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,scss,md,html}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
+}

@@ -1,0 +1,15 @@
+type: action
+name: chatStats
+definition:
+  kind: synchronous
+  handler: ${NHOST_FUNCTIONS_URL}/stats-bot
+  arguments:
+    - name: slug
+      type: String!
+    - name: question
+      type: String!
+  output_type: String
+permissions:
+  - role: user
+    permission:
+      access: full
