@@ -232,7 +232,7 @@ npm i && npm run dev          # http://localhost:5001/docs
 # ─── Frontend ────────────────────────────────────────────
 cd ../web
 cp .env.local.example .env.local   # NEXT_PUBLIC_API=http://localhost:5001
-npm i
+npm i --legacy-peer-deps    
 npm run dev                    # http://localhost:3000
 ```
 
