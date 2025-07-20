@@ -57,9 +57,10 @@
 13. [Testing](#-testing)
 14. [CI/CD](#-cicd)
 15. [Docker & Compose](#-docker--compose)
-16. [Contributing](#-contributing)
-17. [License](#-license)
-18. [Author](#-author)
+16. [AWS Deployment](#-aws-deployment)
+17. [Contributing](#-contributing)
+18. [License](#-license)
+19. [Author](#-author)
 
 ## 🪄 About Urlvy
 
@@ -380,8 +381,6 @@ Urlvy uses GitHub Actions for continuous integration and deployment. The CI/CD p
 
 The CI/CD configuration is defined in `.github/workflows/workflow.yml`. You can customize it to fit your workflow.
 
----
-
 ## 🐳 Docker & Compose
 
 ### Docker
@@ -420,7 +419,16 @@ For Kubernetes users, we provide a `kubernetes/` directory with example manifest
 
 Feel free to adapt these manifests to your cluster's requirements. You can use tools like `kubectl` or `Helm` to deploy Urlvy on Kubernetes.
 
----
+## 🐍 AWS Deployment
+
+Urlvy can be deployed on AWS using CloudFormation templates. The `aws/` directory contains the necessary YAML files to set up the infrastructure:
+
+- `ecs-backend.yml` – deploys the NestJS API on ECS
+- `rds-postgresql.yml` – provisions a PostgreSQL database on RDS
+- `s3-cloudfront.yml` – sets up S3 for static assets and CloudFront for CDN
+- `deploy.sh` – a script to deploy all stacks in the correct order
+
+For more details on deploying Urlvy on AWS, please refer to the [AWS Deployment Guide](docs/aws-deployment.md).
 
 ## 🤝 Contributing
 
@@ -444,8 +452,6 @@ Bug reports & feature requests are also welcomed via Issues. Feel free to open a
 
 You can use Urlvy in your projects, commercial or non-commercial, as long as you include the original license and attribution.
 You must attribute the original author in your project documentation or README, regardless of whether you modify the code or not, and what you use it for.
-
----
 
 ## 👨🏻‍💻 Author
 
