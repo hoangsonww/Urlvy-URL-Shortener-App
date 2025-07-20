@@ -38,7 +38,7 @@ export class AI_Service {
       temperature: 0.3,
       topP: 0.9,
       topK: 40,
-      maxOutputTokens: 512,
+      maxOutputTokens: 8192,
     };
     const chat = model.startChat({
       generationConfig,
