@@ -1,10 +1,11 @@
-// src/pages/_app.tsx
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
 import { Outfit } from "next/font/google";
 import Layout from "@/components/Layout";
 import { AuthProvider } from "@/context/Auth";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
+import MetaUpdater from "@/components/MetaUpdater";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -14,23 +15,25 @@ const outfit = Outfit({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <main
-        className={`${outfit.variable} flex min-h-screen flex-col font-sans`}
-      >
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+    <>
+      {/* handles initial + live updates of <meta name="theme-color"> */}
+      <MetaUpdater />
 
-        <Toaster
-          richColors
-          position="bottom-right"
-          // Also ensure each toast uses font-sans
-          toastOptions={{
-            className: "font-sans",
-          }}
-        />
-      </main>
-    </AuthProvider>
+      <AuthProvider>
+        <main
+          className={`${outfit.variable} flex min-h-screen flex-col font-sans`}
+        >
+          <Analytics />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <Toaster
+            richColors
+            position="bottom-right"
+            toastOptions={{ className: "font-sans" }}
+          />
+        </main>
+      </AuthProvider>
+    </>
   );
 }

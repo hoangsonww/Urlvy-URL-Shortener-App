@@ -1,4 +1,3 @@
-// pages/404.tsx
 import Head from "next/head";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
