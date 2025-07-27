@@ -232,11 +232,11 @@ cd urlvy
 cd api
 cp .env.example .env          # fill PG_URL, JWT_SECRET, GOOGLE_API_KEY
 docker compose up -d postgres
-npm i && npm run dev          # https://urlvy-url-shortener-app.onrender.com/docs
+npm i && npm run dev          # http://localhost:5001
 
 # ─── Frontend ────────────────────────────────────────────
 cd ../web
-cp .env.local.example .env.local   # NEXT_PUBLIC_API=https://urlvy-url-shortener-app.onrender.com
+cp .env.local.example .env.local   # NEXT_PUBLIC_API=...
 npm i --legacy-peer-deps
 npm run dev                    # http://localhost:3000
 ```
