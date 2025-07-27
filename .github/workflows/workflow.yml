@@ -13,7 +13,7 @@ env:
 
 jobs:
   # ────────────────────────────────────────────────────────────────
-  #  ⚙️ Preflight & Code Quality                                   #
+  #  ⚙️ Preflight & Code Quality
   # ────────────────────────────────────────────────────────────────
   preflight:
     name: "⚙️ Preflight & Code Quality"
@@ -27,17 +27,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: Backend checks
+      - name: Install root dependencies
         run: |
-          npm ci --workspace=api --legacy-peer-deps
-          npm run lint --workspace=api || true
-          npm run format --workspace=api || true
+          npm ci --legacy-peer-deps
 
-      - name: Frontend checks
+      - name: Run lint & format across entire repo
         run: |
-          npm ci --workspace=web --legacy-peer-deps
-          npm run lint --workspace=web || true
-          npm run format --workspace=web || true
+          npm run lint || true
+          npm run format || true
 
   # ────────────────────────────────────────────────────────────────
   #  🏗️ Builds (ignore errors)                                    #

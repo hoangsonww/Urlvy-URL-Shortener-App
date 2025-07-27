@@ -11,9 +11,21 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,scss,md,html}\"",
     "check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,scss,md,html}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "url-shortener",
+    "link-shortener",
+    "gemini",
+    "google-gemini",
+    "ai",
+    "artificial-intelligence",
+    "analytics",
+    "traffic-analysis",
+    "url-analytics",
+    "url-tracking",
+    "url-management"
+  ],
+  "author": "Son Nguyen",
+  "license": "MIT",
   "dependencies": {
     "prettier": "^3.6.2"
   }
