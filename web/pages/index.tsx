@@ -178,7 +178,10 @@ export default function Landing() {
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </Link>
-          <Link href="http://localhost:5001/docs" target="_blank">
+          <Link
+            href="https://urlvy-url-shortener-app.onrender.com/docs"
+            target="_blank"
+          >
             <Button size="lg" variant="outline">
               API Docs
             </Button>

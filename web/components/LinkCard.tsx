@@ -19,7 +19,7 @@ import Link from "next/link";
 
 export default function LinkCard({ link }: { link: any }) {
   const [copied, setCopied] = useState(false);
-  const shortUrl = `http://localhost:5001/urls/${link.slug}`;
+  const shortUrl = `https://urlvy-url-shortener-app.onrender.com/urls/${link.slug}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shortUrl);

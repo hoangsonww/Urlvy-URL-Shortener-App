@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:5001",
+  baseURL: "https://urlvy-url-shortener-app.onrender.com",
 });
 
 api.interceptors.request.use((cfg) => {

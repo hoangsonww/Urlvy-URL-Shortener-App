@@ -81,10 +81,13 @@ Built for **growth hackers, product teams and indie makers** who need answers, n
 
 Urlvy is live and ready to use! Check it out:
 
-- **Frontend** – [https://urlvy.app](https://urlvy.app)
-- **Swagger Docs** – [https://api.urlvy.app/docs](https://api.urlvy.app/docs)
+- **Frontend** – [https://urlvy.vercel.app](https://urlvy.vercel.app)
+- **Backend API - Swagger Docs** – [https://api.urlvy.app/docs](https://urlvy-url-shortener-app.onrender.com/docs)
 
 Feel free to register with a throw-away address and play – no credit card, no limits during beta.
+
+> [!CAUTION]
+> The demo may be down periodically due to inactivity or maintenance. If you encounter issues, please try again later or deploy your own instance using the instructions below. Please don't rely on the demo for production use, as it may not always be available!
 
 ## ✨ Feature Highlights
 
@@ -228,12 +231,12 @@ cd urlvy
 cd api
 cp .env.example .env          # fill PG_URL, JWT_SECRET, GOOGLE_API_KEY
 docker compose up -d postgres
-npm i && npm run dev          # http://localhost:5001/docs
+npm i && npm run dev          # https://urlvy-url-shortener-app.onrender.com/docs
 
 # ─── Frontend ────────────────────────────────────────────
 cd ../web
-cp .env.local.example .env.local   # NEXT_PUBLIC_API=http://localhost:5001
-npm i --legacy-peer-deps    
+cp .env.local.example .env.local   # NEXT_PUBLIC_API=https://urlvy-url-shortener-app.onrender.com
+npm i --legacy-peer-deps
 npm run dev                    # http://localhost:3000
 ```
 
