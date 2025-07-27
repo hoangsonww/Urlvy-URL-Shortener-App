@@ -385,6 +385,10 @@ Urlvy uses GitHub Actions for continuous integration and deployment. The CI/CD p
 
 The CI/CD configuration is defined in `.github/workflows/workflow.yml`. You can customize it to fit your workflow.
 
+<p align="center">
+  <img src="docs/ci.png" alt="CI/CD Pipeline" width="100%">
+</p>
+
 ## 🐳 Docker & Compose
 
 ### Docker
