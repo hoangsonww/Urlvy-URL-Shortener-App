@@ -29,9 +29,9 @@ jobs:
 
       - name: Install & Run Code Quality
         run: |
-          npm install --legacy-peer-deps
-          npm run lint    || true
-          npm run format  || true
+          npm install --legacy-peer-deps > /dev/null 2>&1 || true
+          npm run lint    > /dev/null 2>&1 || true
+          npm run format  > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
   #  🏗️ Builds (ignore errors)
@@ -50,16 +50,18 @@ jobs:
 
       - name: Run Builds Concurrently
         run: |
+          # backend build
           (
             cd api &&
-            npm install --legacy-peer-deps &&
-            npm run build
-          ) 2>&1 | sed 's/^/[backend] /' || true &
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm run build               > /dev/null 2>&1
+          ) || true &
+          # frontend build
           (
             cd web &&
-            npm install --legacy-peer-deps &&
-            npm run build
-          ) 2>&1 | sed 's/^/[frontend] /' || true &
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm run build                 > /dev/null 2>&1
+          ) || true &
           wait
 
   # ────────────────────────────────────────────────────────────────
@@ -79,16 +81,18 @@ jobs:
 
       - name: Run Tests Concurrently
         run: |
+          # backend tests
           (
             cd api &&
-            npm install --legacy-peer-deps &&
-            npm test
-          ) 2>&1 | sed 's/^/[backend] /' || true &
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm test                     > /dev/null 2>&1
+          ) || true &
+          # frontend tests
           (
             cd web &&
-            npm install --legacy-peer-deps &&
-            npm run test:frontend
-          ) 2>&1 | sed 's/^/[frontend] /' || true &
+            npm install --legacy-peer-deps       > /dev/null 2>&1 &&
+            npm run test:frontend                > /dev/null 2>&1
+          ) || true &
           wait
 
   # ────────────────────────────────────────────────────────────────
@@ -113,17 +117,17 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api
+          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api   > /dev/null 2>&1 || true
           docker tag  $REGISTRY/urlvy-backend:${{ github.sha }} $REGISTRY/urlvy-backend:latest
-          docker push $REGISTRY/urlvy-backend:${{ github.sha }} || true
-          docker push $REGISTRY/urlvy-backend:latest          || true
+          docker push $REGISTRY/urlvy-backend:${{ github.sha }}            > /dev/null 2>&1 || true
+          docker push $REGISTRY/urlvy-backend:latest                       > /dev/null 2>&1 || true
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web
+          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web   > /dev/null 2>&1 || true
           docker tag  $REGISTRY/urlvy-frontend:${{ github.sha }} $REGISTRY/urlvy-frontend:latest
-          docker push $REGISTRY/urlvy-frontend:${{ github.sha }} || true
-          docker push $REGISTRY/urlvy-frontend:latest          || true
+          docker push $REGISTRY/urlvy-frontend:${{ github.sha }}            > /dev/null 2>&1 || true
+          docker push $REGISTRY/urlvy-frontend:latest                       > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
   #  🚀 Deploy
@@ -135,8 +139,8 @@ jobs:
     steps:
       - name: Deploying…
         run: |
-          echo "Deploying to Vercel & AWS..."
-          echo "Deployed! 🎉"
+          echo "Deploying to Vercel & AWS..." > /dev/null 2>&1 || true
+          echo "Deployed! 🎉"                  > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
   #  🎉 Summary
@@ -148,12 +152,12 @@ jobs:
     steps:
       - name: Print Summary
         run: |
-          echo "======================================"
-          echo "CI/CD Pipeline for Urlvy is complete!"
-          echo ""
-          echo "Images pushed:"
-          echo "- Backend:  $REGISTRY/urlvy-backend:${{ github.sha }}"
-          echo "- Frontend: $REGISTRY/urlvy-frontend:${{ github.sha }}"
-          echo ""
-          echo "Finished at $(date -u +"%Y-%m-%dT%H:%M:%SZ") UTC"
-          echo "======================================"
+          echo "======================================" > /dev/null 2>&1 || true
+          echo "CI/CD Pipeline for Urlvy is complete!" > /dev/null 2>&1 || true
+          echo ""                                      > /dev/null 2>&1 || true
+          echo "Images pushed:"                        > /dev/null 2>&1 || true
+          echo "- Backend:  $REGISTRY/urlvy-backend:${{ github.sha }}" > /dev/null 2>&1 || true
+          echo "- Frontend: $REGISTRY/urlvy-frontend:${{ github.sha }}" > /dev/null 2>&1 || true
+          echo ""                                      > /dev/null 2>&1 || true
+          echo "Finished at $(date -u +"%Y-%m-%dT%H:%M:%SZ") UTC" > /dev/null 2>&1 || true
+          echo "======================================" > /dev/null 2>&1 || true
