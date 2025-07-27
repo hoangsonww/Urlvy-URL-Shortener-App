@@ -225,8 +225,8 @@ Full DDL in `database/schema.sql`.
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/hoangsonww/urlvy.git
-cd urlvy
+git clone https://github.com/hoangsonww/Urlvy-URL-Shortener-App.git
+cd Urlvy-URL-Shortener-App
 
 # ─── Backend ─────────────────────────────────────────────
 cd api
