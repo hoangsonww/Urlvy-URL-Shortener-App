@@ -44,11 +44,11 @@ This guide walks you through provisioning your **Urlvy** infrastructure on AWS u
 
 We manage three core stacks via plain‑YAML CloudFormation:
 
-| Template               | Purpose                                                                 |
-| ---------------------- | ----------------------------------------------------------------------- |
-| **rds-postgresql.yml** | Create a VPC, subnet group & a managed PostgreSQL instance             |
-| **ecs-backend.yml**    | Push your Docker image to ECR, define an ECS cluster, task & service    |
-| **s3-cloudfront.yml**  | Host static assets in S3 & serve them via CloudFront with HTTPS        |
+| Template               | Purpose                                                              |
+| ---------------------- | -------------------------------------------------------------------- |
+| **rds-postgresql.yml** | Create a VPC, subnet group & a managed PostgreSQL instance           |
+| **ecs-backend.yml**    | Push your Docker image to ECR, define an ECS cluster, task & service |
+| **s3-cloudfront.yml**  | Host static assets in S3 & serve them via CloudFront with HTTPS      |
 
 ### 1.1 `aws/deploy.sh`
 
@@ -99,7 +99,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM
 
 echo "✅ All stacks deployed successfully!"
-````
+```
 
 Make executable:
 
@@ -113,24 +113,24 @@ chmod +x aws/deploy.sh
 
 ### 2.1 `rds-postgresql.yml`
 
-* **VPC**, **SubnetGroup**, **Security Group**
-* **AWS::RDS::DBInstance** (PostgreSQL 15)
-* Outputs: `DBEndpoint`, `DBPort`
+- **VPC**, **SubnetGroup**, **Security Group**
+- **AWS::RDS::DBInstance** (PostgreSQL 15)
+- Outputs: `DBEndpoint`, `DBPort`
 
 ### 2.2 `ecs-backend.yml`
 
-* **ECR Repository** for your NestJS API image
-* **IAM Roles** for ECS task execution
-* **ECS Cluster**, **TaskDefinition**, **Service** (Fargate)
-* **Application Load Balancer** + **TargetGroup**
-* Outputs: `ApiUrl`
+- **ECR Repository** for your NestJS API image
+- **IAM Roles** for ECS task execution
+- **ECS Cluster**, **TaskDefinition**, **Service** (Fargate)
+- **Application Load Balancer** + **TargetGroup**
+- Outputs: `ApiUrl`
 
 ### 2.3 `s3-cloudfront.yml`
 
-* **S3 Bucket** to host Next.js static assets
-* **BucketPolicy** for public read
-* **CloudFront Distribution** with OAI/HTTPS
-* Outputs: `WebUrl`
+- **S3 Bucket** to host Next.js static assets
+- **BucketPolicy** for public read
+- **CloudFront Distribution** with OAI/HTTPS
+- Outputs: `WebUrl`
 
 ---
 
@@ -166,12 +166,12 @@ chmod +x aws/deploy.sh
 
 If you prefer Terraform, a parallel setup lives under `terraform/`, with identical responsibilities:
 
-* `provider.tf` → AWS provider
-* `variables.tf` → region, env, credentials, image tag
-* `rds.tf` → RDS module
-* `ecs.tf` → ECR + ECS + ALB
-* `s3_cloudfront.tf` → S3 + CloudFront
-* `outputs.tf` → endpoint URLs
+- `provider.tf` → AWS provider
+- `variables.tf` → region, env, credentials, image tag
+- `rds.tf` → RDS module
+- `ecs.tf` → ECR + ECS + ALB
+- `s3_cloudfront.tf` → S3 + CloudFront
+- `outputs.tf` → endpoint URLs
 
 Use its own `terraform/deploy.sh`:
 
@@ -184,9 +184,9 @@ cd terraform
 
 ## 🚀 5. Next Steps
 
-* ▶️ **Kubernetes**: use `kubernetes/` manifests to deploy on EKS or any K8s cluster
-* ▶️ **Shell scripts**: `shell/setup.sh` bootstraps local dev, `shell/deploy.sh` wraps the AWS flows
-* ▶️ **CI/CD**: integrate `aws/deploy.sh` or `terraform/deploy.sh` into GitHub Actions for push‑to‑deploy
+- ▶️ **Kubernetes**: use `kubernetes/` manifests to deploy on EKS or any K8s cluster
+- ▶️ **Shell scripts**: `shell/setup.sh` bootstraps local dev, `shell/deploy.sh` wraps the AWS flows
+- ▶️ **CI/CD**: integrate `aws/deploy.sh` or `terraform/deploy.sh` into GitHub Actions for push‑to‑deploy
 
 ---
 

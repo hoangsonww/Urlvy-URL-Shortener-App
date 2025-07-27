@@ -27,7 +27,7 @@ BACKEND_PID=$!
 echo "🏗  Setting up frontend…"
 cd ../web
 cp .env.local.example .env.local
-# Update NEXT_PUBLIC_API if needed (defaults to http://localhost:5001)
+# Update NEXT_PUBLIC_API if needed (defaults to https://urlvy-url-shortener-app.onrender.com)
 npm install
 npm run dev &            # start Next.js dev
 FRONTEND_PID=$!
@@ -42,6 +42,6 @@ cleanup() {
 trap cleanup EXIT
 
 echo "✅  Local dev environment is up!"
-echo "   - Backend: http://localhost:5001/docs"
+echo "   - Backend: https://urlvy-url-shortener-app.onrender.com/docs"
 echo "   - Frontend: http://localhost:3000"
 wait
