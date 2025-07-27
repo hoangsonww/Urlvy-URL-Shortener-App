@@ -4,27 +4,26 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy all source files and install dependencies\COPY . .
-RUN npm ci
+# 1. Copy package manifest and install deps with legacy peer deps
+COPY package.json ./
+RUN npm install --legacy-peer-deps
 
-# Build the NestJS application
+# 2. Copy source & build
+COPY . .
 RUN npm run build
-
 
 ### Runtime Stage
 FROM node:18-alpine AS runner
 WORKDIR /app
 
-# Only copy production artifacts
+# 3. Copy production artifacts
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-# Enforce production mode
+# 4. Enforce production mode & expose port
 ENV NODE_ENV=production
-
-# Expose the API port
 EXPOSE 5001
 
-# Start the NestJS server
+# 5. Start the server
 CMD ["node", "dist/main.js"]

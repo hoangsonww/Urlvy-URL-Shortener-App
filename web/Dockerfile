@@ -1,32 +1,30 @@
 # Dockerfile for Urlvy frontend (Next.js PWA)
 
-# 1. Base image
-FROM node:18-alpine AS base
+### Builder Stage ###
+FROM node:18-alpine AS builder
 WORKDIR /app
-ENV NODE_ENV=production
 
-# 2. Install dependencies
-# Copy everything so that changes to non-dependency files
-# don't bust the cache on npm install.
+# 1. Install all deps (including dev) for build
+COPY package.json package-lock.json ./
+RUN npm install --legacy-peer-deps
+
+# 2. Copy source & build
 COPY . .
-RUN npm ci --production
-
-# 3. Build the app
 RUN npm run build
 
-# 4. Runtime image
+### Runtime Stage ###
 FROM node:18-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Copy built artifacts and production deps
-COPY --from=base /app/.next ./.next
-COPY --from=base /app/public ./public
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/package.json ./package.json
+# 3. Install only production deps, with legacy peer‑deps
+COPY package.json package-lock.json ./
+RUN npm install --production --legacy-peer-deps
 
-# Expose default Next.js port
+# 4. Copy built output
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+# 5. Expose and start
 EXPOSE 3000
-
-# Start the app
 CMD ["npm", "start"]
