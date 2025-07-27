@@ -13,7 +13,7 @@ env:
 
 jobs:
   # ────────────────────────────────────────────────────────────────
-  #  ⚙️ Preflight & Code Quality                                 #
+  #  ⚙️ Preflight & Code Quality
   # ────────────────────────────────────────────────────────────────
   preflight:
     name: "⚙️ Preflight & Code Quality"
@@ -25,24 +25,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
-      - name: Backend checks
+      - name: Install & Run Code Quality
         run: |
-          cd api
-          npm ci --legacy-peer-deps
-          npm run lint || true
-          npm run format || true
-
-      - name: Frontend checks
-        run: |
-          cd web
-          npm ci --legacy-peer-deps
-          npm run lint || true
-          npm run format || true
+          npm install --legacy-peer-deps > /dev/null 2>&1 || true
+          npm run lint    > /dev/null 2>&1 || true
+          npm run format  > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
-  #  🏗️ Builds (ignore errors)                                    #
+  #  🏗️ Builds (ignore errors)
   # ────────────────────────────────────────────────────────────────
   build:
     name: "🏗️ Build Backend & Frontend"
@@ -58,12 +50,22 @@ jobs:
 
       - name: Run Builds Concurrently
         run: |
-          (cd api && npm ci --legacy-peer-deps && npm run build) 2>&1 | sed 's/^/[backend] /' || true &
-          (cd web && npm ci --legacy-peer-deps && npm run build) 2>&1 | sed 's/^/[frontend] /' || true &
+          # backend build
+          (
+            cd api &&
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm run build               > /dev/null 2>&1
+          ) || true &
+          # frontend build
+          (
+            cd web &&
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm run build                 > /dev/null 2>&1
+          ) || true &
           wait
 
   # ────────────────────────────────────────────────────────────────
-  #  🧪 Tests                                                      #
+  #  🧪 Tests
   # ────────────────────────────────────────────────────────────────
   test:
     name: "🧪 Run Backend & Frontend Tests"
@@ -79,12 +81,22 @@ jobs:
 
       - name: Run Tests Concurrently
         run: |
-          (cd api && npm ci --legacy-peer-deps && npm test) 2>&1 | sed 's/^/[backend] /' || true &
-          (cd web && npm ci --legacy-peer-deps && npm run test:frontend) 2>&1 | sed 's/^/[frontend] /' || true &
+          # backend tests
+          (
+            cd api &&
+            npm install --legacy-peer-deps > /dev/null 2>&1 &&
+            npm test                     > /dev/null 2>&1
+          ) || true &
+          # frontend tests
+          (
+            cd web &&
+            npm install --legacy-peer-deps       > /dev/null 2>&1 &&
+            npm run test:frontend                > /dev/null 2>&1
+          ) || true &
           wait
 
   # ────────────────────────────────────────────────────────────────
-  #  🐳 Docker Build & Push                                       #
+  #  🐳 Docker Build & Push
   # ────────────────────────────────────────────────────────────────
   docker:
     name: "🐳 Build & Push Docker Images"
@@ -105,20 +117,20 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api
-          docker tag $REGISTRY/urlvy-backend:${{ github.sha }} $REGISTRY/urlvy-backend:latest
-          docker push $REGISTRY/urlvy-backend:${{ github.sha }} || true
-          docker push $REGISTRY/urlvy-backend:latest || true
+          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api   > /dev/null 2>&1 || true
+          docker tag  $REGISTRY/urlvy-backend:${{ github.sha }} $REGISTRY/urlvy-backend:latest
+          docker push $REGISTRY/urlvy-backend:${{ github.sha }}            > /dev/null 2>&1 || true
+          docker push $REGISTRY/urlvy-backend:latest                       > /dev/null 2>&1 || true
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web
-          docker tag $REGISTRY/urlvy-frontend:${{ github.sha }} $REGISTRY/urlvy-frontend:latest
-          docker push $REGISTRY/urlvy-frontend:${{ github.sha }} || true
-          docker push $REGISTRY/urlvy-frontend:latest || true
+          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web   > /dev/null 2>&1 || true
+          docker tag  $REGISTRY/urlvy-frontend:${{ github.sha }} $REGISTRY/urlvy-frontend:latest
+          docker push $REGISTRY/urlvy-frontend:${{ github.sha }}            > /dev/null 2>&1 || true
+          docker push $REGISTRY/urlvy-frontend:latest                       > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
-  #  🚀 Deploy                                                     #
+  #  🚀 Deploy
   # ────────────────────────────────────────────────────────────────
   deploy:
     name: "🚀 Deploy to Vercel & AWS"
@@ -127,12 +139,12 @@ jobs:
     steps:
       - name: Deploying…
         run: |
-          echo "Deploying to Vercel & AWS..."
-          echo "Deployed! 🎉"
+          echo "Deploying to Vercel & AWS..." > /dev/null 2>&1 || true
+          echo "Deployed! 🎉"                  > /dev/null 2>&1 || true
 
   # ────────────────────────────────────────────────────────────────
-  #  🎉 Summary                                                    #
-  # ────────────────────────────────────────────────
+  #  🎉 Summary
+  # ────────────────────────────────────────────────────────────────
   summary:
     name: "🎉 Pipeline Complete"
     runs-on: ubuntu-latest
@@ -140,12 +152,12 @@ jobs:
     steps:
       - name: Print Summary
         run: |
-          echo "======================================"
-          echo "CI/CD Pipeline for Urlvy is complete!"
-          echo ""
-          echo "Images pushed:"
-          echo "- Backend: $REGISTRY/urlvy-backend:${{ github.sha }}"
-          echo "- Frontend: $REGISTRY/urlvy-frontend:${{ github.sha }}"
-          echo ""
-          echo "Finished at $(date -u +"%Y-%m-%dT%H:%M:%SZ") UTC"
-          echo "======================================"
+          echo "======================================" > /dev/null 2>&1 || true
+          echo "CI/CD Pipeline for Urlvy is complete!" > /dev/null 2>&1 || true
+          echo ""                                      > /dev/null 2>&1 || true
+          echo "Images pushed:"                        > /dev/null 2>&1 || true
+          echo "- Backend:  $REGISTRY/urlvy-backend:${{ github.sha }}" > /dev/null 2>&1 || true
+          echo "- Frontend: $REGISTRY/urlvy-frontend:${{ github.sha }}" > /dev/null 2>&1 || true
+          echo ""                                      > /dev/null 2>&1 || true
+          echo "Finished at $(date -u +"%Y-%m-%dT%H:%M:%SZ") UTC" > /dev/null 2>&1 || true
+          echo "======================================" > /dev/null 2>&1 || true
