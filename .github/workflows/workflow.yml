@@ -13,7 +13,7 @@ env:
 
 jobs:
   # ────────────────────────────────────────────────────────────────
-  #  ⚙️ Preflight & Code Quality                                 #
+  #  ⚙️ Preflight & Code Quality                                   #
   # ────────────────────────────────────────────────────────────────
   preflight:
     name: "⚙️ Preflight & Code Quality"
@@ -29,17 +29,15 @@ jobs:
 
       - name: Backend checks
         run: |
-          cd api
-          npm ci --legacy-peer-deps
-          npm run lint || true
-          npm run format || true
+          npm ci --workspace=api --legacy-peer-deps
+          npm run lint --workspace=api || true
+          npm run format --workspace=api || true
 
       - name: Frontend checks
         run: |
-          cd web
-          npm ci --legacy-peer-deps
-          npm run lint || true
-          npm run format || true
+          npm ci --workspace=web --legacy-peer-deps
+          npm run lint --workspace=web || true
+          npm run format --workspace=web || true
 
   # ────────────────────────────────────────────────────────────────
   #  🏗️ Builds (ignore errors)                                    #
