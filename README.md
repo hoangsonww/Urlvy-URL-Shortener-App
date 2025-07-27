@@ -28,6 +28,7 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![Amazon Web Services](https://img.shields.io/badge/Amazon_Web_Services-232F3E?style=flat-square&logo=task&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-4D4D4D?style=flat-square&logo=render&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-623CE4?style=flat-square&logo=terraform&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
 ![Nhost](https://img.shields.io/badge/Nhost-00C58E?style=flat-square&logo=nhost&logoColor=white)
