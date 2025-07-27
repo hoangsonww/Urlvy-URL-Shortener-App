@@ -51,7 +51,7 @@ function useCountUp(target: number, duration = 1200) {
   return { ref, val };
 }
 
-const rotate = ["reach", "engagement", "insight", "clarity"];
+const rotate = ["reach", "links", "insight", "content", "product", "traffic"];
 
 const features = [
   {
