@@ -474,4 +474,4 @@ Alternatively, you can also open an issue on this repository if you have any que
 ---
 
 > [!NOTE]
-> “Build links that _talk back_.” – Urlvy tagline
+> “Build links that _talk back_.” – The Urlvy tagline
