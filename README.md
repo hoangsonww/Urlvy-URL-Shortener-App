@@ -225,8 +225,8 @@ Full DDL in `database/schema.sql`.
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/hoangsonww/urlvy.git
-cd urlvy
+git clone https://github.com/hoangsonww/Urlvy-URL-Shortener-App.git
+cd Urlvy-URL-Shortener-App
 
 # ─── Backend ─────────────────────────────────────────────
 cd api
@@ -474,4 +474,4 @@ Alternatively, you can also open an issue on this repository if you have any que
 ---
 
 > [!NOTE]
-> “Build links that _talk back_.” – Urlvy tagline
+> “Build links that _talk back_.” – The Urlvy tagline
