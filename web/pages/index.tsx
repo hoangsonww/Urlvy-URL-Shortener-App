@@ -131,7 +131,7 @@ const faq = [
   ["Is there an SDK?", "REST & GraphQL arrive first; JS SDK follows."],
 ];
 
-// ───────────────────────── page
+//  page
 export default function Landing() {
   // rotate word in hero
   const [w, setW] = useState(0);
@@ -155,7 +155,7 @@ export default function Landing() {
         />
       </Head>
 
-      {/* HERO ───────────────────────────────── */}
+      {/* HERO  */}
       <section className="relative flex flex-col items-center justify-center text-center h-[calc(100dvh-4rem)] overflow-hidden">
         {/* animated BG */}
         <div className="absolute inset-0 -z-10 bg-[length:300%_300%] bg-gradient-to-br from-primary via-secondary to-accent animate-gradient" />
@@ -207,7 +207,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* FEATURES GRID ───────────────────────── */}
+      {/* FEATURES GRID  */}
       <Section title="Everything you need to win clicks">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((f) => (
@@ -264,7 +264,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* HOW IT WORKS ───────────────────────── */}
+      {/* HOW IT WORKS  */}
       <Section title="Three simple steps">
         <div className="grid sm:grid-cols-3 gap-8 text-center">
           {howSteps.map((s, i) => (
@@ -439,7 +439,7 @@ export default function Landing() {
   );
 }
 
-// ───────────────────────── reusable section wrapper
+//  reusable section wrapper
 function Section({
   title,
   children,
@@ -455,7 +455,7 @@ function Section({
   );
 }
 
-// ───────────────────────── tiny pieces
+//  tiny pieces
 function Counter({
   icon,
   val,

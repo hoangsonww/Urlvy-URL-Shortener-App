@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/PasswordInput";
 import { toast } from "sonner";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               readOnly={step === "reset"}
-              disabled={step === "reset"}
+              disabled={step === "reset" || loading}
             />
 
             {/* Only show password fields in reset step */}
@@ -98,11 +98,13 @@ export default function ForgotPasswordPage() {
                   placeholder="New password"
                   value={pw1}
                   onChange={(e) => setPw1(e.target.value)}
+                  disabled={loading}
                 />
                 <PasswordInput
                   placeholder="Confirm new password"
                   value={pw2}
                   onChange={(e) => setPw2(e.target.value)}
+                  disabled={loading}
                 />
               </>
             )}
@@ -111,10 +113,12 @@ export default function ForgotPasswordPage() {
           <CardFooter className="flex flex-col gap-3">
             {step === "email" ? (
               <Button className="w-full" onClick={sendEmail} disabled={loading}>
+                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 Verify Email
               </Button>
             ) : (
               <Button className="w-full" onClick={doReset} disabled={loading}>
+                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 Reset Password
               </Button>
             )}

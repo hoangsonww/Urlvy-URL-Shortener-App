@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/PasswordInput";
 import { useAuth } from "@/context/Auth";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function Register() {
   const { login } = useAuth();
@@ -44,7 +45,7 @@ export default function Register() {
       });
       login(data.accessToken);
       toast.success("Account created! Redirecting…");
-      router.push("/app/links");
+      await router.push("/app/links");
     } catch (e: any) {
       toast.error(e.response?.data?.message ?? "Registration failed");
     } finally {
@@ -92,6 +93,7 @@ export default function Register() {
 
           <CardFooter className="flex flex-col gap-3">
             <Button className="w-full" onClick={submit} disabled={loading}>
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? "Creating…" : "Sign Up"}
             </Button>
             <p className="text-xs text-center">
