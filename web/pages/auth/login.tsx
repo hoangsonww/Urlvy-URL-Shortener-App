@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/PasswordInput";
 import { useAuth } from "@/context/Auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import Head from "next/head";
 
 export default function Login() {
@@ -22,14 +22,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const submit = async () => {
+    setLoading(true);
+    setErr("");
     try {
       const { data } = await api.post("/auth/login", { email, password: pw });
       login(data.accessToken);
-      router.push("/app/links");
+      await router.push("/app/links");
     } catch (e: any) {
       setErr(e.response?.data?.message ?? "Invalid credentials");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,11 +57,13 @@ export default function Login() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
             <PasswordInput
               placeholder="Password"
               value={pw}
               onChange={(e) => setPw(e.target.value)}
+              disabled={loading}
             />
             {err && (
               <Alert variant="destructive">
@@ -67,7 +74,8 @@ export default function Login() {
             )}
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
-            <Button className="w-full" onClick={submit}>
+            <Button className="w-full" onClick={submit} disabled={loading}>
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               Enter
             </Button>
             <p className="text-xs">

@@ -1,9 +1,18 @@
 "use client";
 
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState, useMemo } from "react";
+import Head from "next/head";
 import { api } from "@/lib/api";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import ChatDialog from "@/components/ChatDialog";
@@ -25,9 +34,9 @@ import {
   Legend,
 } from "recharts";
 import { toast } from "sonner";
-import Head from "next/head";
-import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, Loader2, Copy } from "lucide-react";
+
+const BACKEND_URL = "https://urlvy-url-shortener-app.onrender.com";
 
 type Click = {
   id: string;
@@ -185,6 +194,8 @@ export default function Details() {
     "var(--chart-6)",
   ];
 
+  const fullShortened = `${BACKEND_URL}/urls/${link.slug}`;
+
   return (
     <>
       <Head>
@@ -218,6 +229,22 @@ export default function Details() {
             >
               {link.destination}
             </a>
+            <div className="flex items-center space-x-2 mt-4">
+              <h3 className="text-sm font-semibold">Shortened Link:</h3>
+              <Input
+                value={fullShortened}
+                readOnly
+                className="flex-1 break-all"
+              />
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(fullShortened);
+                  toast.success("Short link copied!");
+                }}
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -304,7 +331,6 @@ export default function Details() {
                 <XAxis type="number" dataKey="idx" name="Click #" />
                 <YAxis type="number" dataKey="interval" name="Minutes" />
                 <ReTooltip cursor={{ strokeDasharray: "3 3" }} />
-                {/* brighter accent */}
                 <Scatter data={scatter!} fill="var(--primary)" />
               </ScatterChart>
             </ResponsiveContainer>
