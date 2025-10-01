@@ -94,17 +94,17 @@ Feel free to register with a throw-away address and play – no credit card, no 
 
 Urlvy packs a punch with its features, designed to make link management and analytics a breeze:
 
-| Category      | Goodies                                                                              |
-| ------------- | ------------------------------------------------------------------------------------ |
-| **Link Ops**  | One-click shorten, custom slug, edit destination, expire × date or by clicks         |
-| **Analytics** | 30-day line chart, hourly bar, weekday bar, device pie, interval histogram & scatter |
+| Category      | Goodies                                                                                  |
+| ------------- | ---------------------------------------------------------------------------------------- |
+| **Link Ops**  | One-click shorten, custom slug, edit destination, expire × date or by clicks             |
+| **Analytics** | 30-day line chart, hourly bar, weekday bar, device pie, interval histogram & scatter     |
 | **Insights**  | Smart Insight hub highlights best posting windows, link leaders, loyalty & stale content |
-| **AI**        | Summaries on create, conversational stats bot with full chat history                 |
-| **Auth**      | Register, login, JWT refresh, forgot-password (email verify + reset)                 |
-| **UI/UX**     | Dark mode, skeleton loaders, animated counters, responsive & accessible              |
-| **Docs**      | Swagger UI served 100 % from CDN, favicon, OpenAPI JSON at `/docs-json`              |
-| **DevX**      | ESLint, Prettier, Husky, Type-safe DTOs, Zod on FE, ValidationPipe on BE             |
-| **Ops**       | Docker-Compose dev stack, Postgres 15, Redis cache (future), GitHub Actions CI, AWS  |
+| **AI**        | Summaries on create, conversational stats bot with full chat history                     |
+| **Auth**      | Register, login, JWT refresh, forgot-password (email verify + reset)                     |
+| **UI/UX**     | Dark mode, skeleton loaders, animated counters, responsive & accessible                  |
+| **Docs**      | Swagger UI served 100 % from CDN, favicon, OpenAPI JSON at `/docs-json`                  |
+| **DevX**      | ESLint, Prettier, Husky, Type-safe DTOs, Zod on FE, ValidationPipe on BE                 |
+| **Ops**       | Docker-Compose dev stack, Postgres 15, Redis cache (future), GitHub Actions CI, AWS      |
 
 ## 🏗 Tech Stack & Architecture
 

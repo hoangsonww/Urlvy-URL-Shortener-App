@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -37,7 +37,7 @@ type InsightCard = {
   metric: string;
   description: string;
   tone: "neutral" | "positive" | "negative";
-  icon: JSX.Element;
+  icon: ReactNode;
 };
 
 type SmartInsightsProps = {
@@ -108,10 +108,11 @@ export default function SmartInsights({ links }: SmartInsightsProps) {
         : `${
             last7Clicks.length - prev7Clicks.length >= 0 ? "Up" : "Down"
           } ${Math.abs(
-            ((last7Clicks.length - prev7Clicks.length) /
-              prev7Clicks.length) *
+            ((last7Clicks.length - prev7Clicks.length) / prev7Clicks.length) *
               100,
-          ).toFixed(1)}% vs the prior 7 days (${prev7Clicks.length.toLocaleString()} clicks).`;
+          ).toFixed(
+            1,
+          )}% vs the prior 7 days (${prev7Clicks.length.toLocaleString()} clicks).`;
 
     const momentumTone: InsightCard["tone"] =
       prev7Clicks.length === 0
@@ -227,7 +228,9 @@ export default function SmartInsights({ links }: SmartInsightsProps) {
     insights.push({
       id: "stale",
       title: "Stale links",
-      metric: staleLinks.length ? `${staleLinks.length} need love` : "All healthy",
+      metric: staleLinks.length
+        ? `${staleLinks.length} need love`
+        : "All healthy",
       description:
         staleLinks.length > 0
           ? `${staleLinks
@@ -274,7 +277,8 @@ export default function SmartInsights({ links }: SmartInsightsProps) {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Add your first links and start receiving actionable recommendations based on live click data.
+            Add your first links and start receiving actionable recommendations
+            based on live click data.
           </p>
         </CardContent>
       </Card>
@@ -289,7 +293,8 @@ export default function SmartInsights({ links }: SmartInsightsProps) {
           <div>
             <CardTitle>Smart Insights</CardTitle>
             <p className="text-sm text-muted-foreground">
-              Urlvy analyses your portfolio and surfaces opportunities automatically.
+              Urlvy analyses your portfolio and surfaces opportunities
+              automatically.
             </p>
           </div>
           <Badge variant="secondary" className="bg-primary/15 text-primary">
@@ -304,7 +309,8 @@ export default function SmartInsights({ links }: SmartInsightsProps) {
               key={card.id}
               className={cn(
                 "rounded-xl border bg-background/70 p-4 shadow-sm transition hover:shadow-md",
-                card.tone === "positive" && "border-emerald-200/60 dark:border-emerald-900/40",
+                card.tone === "positive" &&
+                  "border-emerald-200/60 dark:border-emerald-900/40",
                 card.tone === "negative" && "border-destructive/40",
               )}
             >
