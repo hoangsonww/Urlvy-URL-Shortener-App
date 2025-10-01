@@ -98,6 +98,7 @@ Urlvy packs a punch with its features, designed to make link management and anal
 | ------------- | ------------------------------------------------------------------------------------ |
 | **Link Ops**  | One-click shorten, custom slug, edit destination, expire × date or by clicks         |
 | **Analytics** | 30-day line chart, hourly bar, weekday bar, device pie, interval histogram & scatter |
+| **Insights**  | Smart Insight hub highlights best posting windows, link leaders, loyalty & stale content |
 | **AI**        | Summaries on create, conversational stats bot with full chat history                 |
 | **Auth**      | Register, login, JWT refresh, forgot-password (email verify + reset)                 |
 | **UI/UX**     | Dark mode, skeleton loaders, animated counters, responsive & accessible              |

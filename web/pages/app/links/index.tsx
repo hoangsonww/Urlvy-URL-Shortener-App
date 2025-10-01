@@ -9,6 +9,7 @@ import ChatDialog, { ChatDialogProps } from "@/components/ChatDialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import LinkCard from "@/components/LinkCard";
+import SmartInsights from "@/components/SmartInsights";
 import { Plus, Check } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -250,6 +251,8 @@ export default function Links() {
             <Grid links={filtered} />
           </TabsContent>
         </Tabs>
+
+        <SmartInsights links={links} />
 
         {/* Global Stats: 6 charts, 2 per row */}
         <section className="space-y-6">
