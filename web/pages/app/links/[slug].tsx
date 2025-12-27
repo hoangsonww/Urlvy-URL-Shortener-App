@@ -55,6 +55,13 @@ type LinkDetail = {
   clicks: Click[];
 };
 
+const normalizeClicks = (clicks: unknown): Click[] => {
+  if (!Array.isArray(clicks)) return [];
+  return clicks.filter((click): click is Click =>
+    Boolean(click && typeof (click as Click).createdAt === "string"),
+  );
+};
+
 export default function Details() {
   const { query } = useRouter();
   const slug = Array.isArray(query.slug) ? query.slug[0] : query.slug;
@@ -72,7 +79,15 @@ export default function Details() {
       api.get<any[]>(`/stats/${slug}/daily`, { params: { days: 30 } }),
     ])
       .then(([lres, dres]) => {
-        setLink(lres.data.data);
+        const rawLink = lres.data.data;
+        const safeLink =
+          rawLink && typeof rawLink === "object"
+            ? {
+                ...(rawLink as LinkDetail),
+                clicks: normalizeClicks((rawLink as any).clicks),
+              }
+            : null;
+        setLink(safeLink);
         setDaily(
           dres.data.map((d) => ({
             day: d.day.slice(5, 10),
@@ -87,33 +102,35 @@ export default function Details() {
       .finally(() => setLoading(false));
   }, [slug]);
 
+  const clicks = useMemo(() => normalizeClicks(link?.clicks), [link]);
+
   // 2) Hourly
   const hourly = useMemo(() => {
     if (!link) return null;
     const cnt: Record<number, number> = {};
     for (let h = 0; h < 24; h++) cnt[h] = 0;
-    link.clicks.forEach((c) => {
+    clicks.forEach((c) => {
       cnt[new Date(c.createdAt).getHours()]++;
     });
     return Object.entries(cnt).map(([h, v]) => ({
       hour: h.padStart(2, "0") + ":00",
       count: v,
     }));
-  }, [link]);
+  }, [clicks, link]);
 
   // 3) Device
   const device = useMemo(() => {
     if (!link) return null;
     let mob = 0,
       desk = 0;
-    link.clicks.forEach((c) => {
+    clicks.forEach((c) => {
       /Mobi/.test(c.userAgent) ? mob++ : desk++;
     });
     return [
       { name: "Desktop", value: desk },
       { name: "Mobile", value: mob },
     ];
-  }, [link]);
+  }, [clicks, link]);
 
   // 4) Weekday
   const weekdays = useMemo(() => {
@@ -121,16 +138,16 @@ export default function Details() {
     const names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const cnt: Record<number, number> = {};
     names.forEach((_, i) => (cnt[i] = 0));
-    link.clicks.forEach((c) => {
+    clicks.forEach((c) => {
       cnt[new Date(c.createdAt).getDay()]++;
     });
     return names.map((n, i) => ({ day: n, count: cnt[i] }));
-  }, [link]);
+  }, [clicks, link]);
 
   // 5) Interval histogram bins
   const hist = useMemo(() => {
     if (!link) return null;
-    const times = link.clicks
+    const times = clicks
       .map((c) => new Date(c.createdAt).getTime())
       .sort((a, b) => a - b);
     const intervals: number[] = [];
@@ -153,12 +170,12 @@ export default function Details() {
       range,
       count,
     }));
-  }, [link]);
+  }, [clicks, link]);
 
   // 6) Scatter of minute intervals
   const scatter = useMemo(() => {
     if (!link) return null;
-    const times = link.clicks
+    const times = clicks
       .map((c) => new Date(c.createdAt).getTime())
       .sort((a, b) => a - b);
     const pts: { idx: number; interval: number }[] = [];
@@ -169,7 +186,7 @@ export default function Details() {
       });
     }
     return pts;
-  }, [link]);
+  }, [clicks, link]);
 
   if (loading || !link || !daily) {
     return (
@@ -215,7 +232,7 @@ export default function Details() {
             <CardTitle className="truncate text-lg leading-snug">
               {link.slug}
             </CardTitle>
-            <Badge variant="outline">{link.clicks.length} clicks</Badge>
+            <Badge variant="outline">{clicks.length} clicks</Badge>
           </CardHeader>
           <CardContent className="space-y-3 pb-6">
             <p className="text-sm text-muted-foreground">

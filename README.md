@@ -72,6 +72,7 @@ Urlvy is a **full-stack URL platform** that lets you:
 - 📈 **Live analytics** – track clicks, referrers, devices, geos in real-time and more
 - 🤖 **Chat with UrlvyStatsBot** – ask “Why did clicks spike yesterday?” and get insights
 - ⏲ **TTL & auto-expire** – set links to self-destruct or pause whenever
+- 🎯 **Search, filter & sort** – find any link in seconds
 - 📊 **Dashboard** – global stats across every link, top performers & histograms
 - 🛡 **Security first** – JWT, RBAC guards, rate-limited endpoints
 - 🧰 **REST + Swagger** – fully typed OpenAPI 3.1 spec, ready for your automation

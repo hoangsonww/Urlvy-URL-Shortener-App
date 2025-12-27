@@ -20,6 +20,7 @@ import Link from "next/link";
 export default function LinkCard({ link }: { link: any }) {
   const [copied, setCopied] = useState(false);
   const shortUrl = `https://urlvy-url-shortener-app.onrender.com/urls/${link.slug}`;
+  const clicks = Array.isArray(link?.clicks) ? link.clicks : [];
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shortUrl);
@@ -69,7 +70,7 @@ export default function LinkCard({ link }: { link: any }) {
       </CardContent>
 
       <CardFooter className="flex justify-between pt-4">
-        <Badge variant="secondary">{link.clicks.length} clicks</Badge>
+        <Badge variant="secondary">{clicks.length} clicks</Badge>
         <Link
           href={`/app/links/${link.slug}`}
           className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
