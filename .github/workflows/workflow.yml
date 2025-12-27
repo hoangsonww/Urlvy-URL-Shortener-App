@@ -117,17 +117,21 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api   > /dev/null 2>&1 || true
-          docker tag  $REGISTRY/urlvy-backend:${{ github.sha }} $REGISTRY/urlvy-backend:latest
-          docker push $REGISTRY/urlvy-backend:${{ github.sha }}            > /dev/null 2>&1 || true
-          docker push $REGISTRY/urlvy-backend:latest                       > /dev/null 2>&1 || true
+          docker build -t $REGISTRY/urlvy-backend:${{ github.sha }} api || true
+          if docker image inspect $REGISTRY/urlvy-backend:${{ github.sha }} > /dev/null 2>&1; then
+            docker tag  $REGISTRY/urlvy-backend:${{ github.sha }} $REGISTRY/urlvy-backend:latest
+            docker push $REGISTRY/urlvy-backend:${{ github.sha }}            > /dev/null 2>&1 || true
+            docker push $REGISTRY/urlvy-backend:latest                       > /dev/null 2>&1 || true
+          fi
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web   > /dev/null 2>&1 || true
-          docker tag  $REGISTRY/urlvy-frontend:${{ github.sha }} $REGISTRY/urlvy-frontend:latest
-          docker push $REGISTRY/urlvy-frontend:${{ github.sha }}            > /dev/null 2>&1 || true
-          docker push $REGISTRY/urlvy-frontend:latest                       > /dev/null 2>&1 || true
+          docker build -t $REGISTRY/urlvy-frontend:${{ github.sha }} web || true
+          if docker image inspect $REGISTRY/urlvy-frontend:${{ github.sha }} > /dev/null 2>&1; then
+            docker tag  $REGISTRY/urlvy-frontend:${{ github.sha }} $REGISTRY/urlvy-frontend:latest
+            docker push $REGISTRY/urlvy-frontend:${{ github.sha }}            > /dev/null 2>&1 || true
+            docker push $REGISTRY/urlvy-frontend:latest                       > /dev/null 2>&1 || true
+          fi
 
   # ────────────────────────────────────────────────────────────────
   #  🚀 Deploy
