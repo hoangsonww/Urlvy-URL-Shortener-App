@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/lib/api";
 import {
@@ -23,6 +23,12 @@ export default function Login() {
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (loading) return;
+    void submit();
+  };
 
   const submit = async () => {
     setLoading(true);
@@ -52,45 +58,47 @@ export default function Login() {
           <CardHeader>
             <CardTitle>Log in</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-            />
-            <PasswordInput
-              placeholder="Password"
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              disabled={loading}
-            />
-            {err && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{err}</AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-          <CardFooter className="flex flex-col gap-3">
-            <Button className="w-full" onClick={submit} disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-              Enter
-            </Button>
-            <p className="text-xs">
-              No account?{" "}
-              <a href="/auth/register" className="underline">
-                Sign up
-              </a>
-            </p>
-            <p className="text-xs">
-              Forgot your password?{" "}
-              <a href="/auth/forgot" className="underline">
-                Reset it now
-              </a>
-            </p>
-          </CardFooter>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              <Input
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+              />
+              <PasswordInput
+                placeholder="Password"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                disabled={loading}
+              />
+              {err && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{err}</AlertDescription>
+                </Alert>
+              )}
+            </CardContent>
+            <CardFooter className="flex flex-col gap-3">
+              <Button className="w-full" type="submit" disabled={loading}>
+                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                Enter
+              </Button>
+              <p className="text-xs">
+                No account?{" "}
+                <a href="/auth/register" className="underline">
+                  Sign up
+                </a>
+              </p>
+              <p className="text-xs">
+                Forgot your password?{" "}
+                <a href="/auth/forgot" className="underline">
+                  Reset it now
+                </a>
+              </p>
+            </CardFooter>
+          </form>
         </Card>
       </Center>
     </>

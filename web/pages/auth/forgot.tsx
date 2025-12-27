@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { api } from "@/lib/api";
@@ -26,6 +26,16 @@ export default function ForgotPasswordPage() {
   const [pw1, setPw1] = useState("");
   const [pw2, setPw2] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (loading) return;
+    if (step === "email") {
+      void sendEmail();
+    } else {
+      void doReset();
+    }
+  };
 
   // Step 1: verify email exists
   const sendEmail = async () => {
@@ -80,49 +90,51 @@ export default function ForgotPasswordPage() {
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="space-y-4">
-            {/* Email input always visible; locked on reset */}
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              readOnly={step === "reset"}
-              disabled={step === "reset" || loading}
-            />
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              {/* Email input always visible; locked on reset */}
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                readOnly={step === "reset"}
+                disabled={step === "reset" || loading}
+              />
 
-            {/* Only show password fields in reset step */}
-            {step === "reset" && (
-              <>
-                <PasswordInput
-                  placeholder="New password"
-                  value={pw1}
-                  onChange={(e) => setPw1(e.target.value)}
-                  disabled={loading}
-                />
-                <PasswordInput
-                  placeholder="Confirm new password"
-                  value={pw2}
-                  onChange={(e) => setPw2(e.target.value)}
-                  disabled={loading}
-                />
-              </>
-            )}
-          </CardContent>
+              {/* Only show password fields in reset step */}
+              {step === "reset" && (
+                <>
+                  <PasswordInput
+                    placeholder="New password"
+                    value={pw1}
+                    onChange={(e) => setPw1(e.target.value)}
+                    disabled={loading}
+                  />
+                  <PasswordInput
+                    placeholder="Confirm new password"
+                    value={pw2}
+                    onChange={(e) => setPw2(e.target.value)}
+                    disabled={loading}
+                  />
+                </>
+              )}
+            </CardContent>
 
-          <CardFooter className="flex flex-col gap-3">
-            {step === "email" ? (
-              <Button className="w-full" onClick={sendEmail} disabled={loading}>
-                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-                Verify Email
-              </Button>
-            ) : (
-              <Button className="w-full" onClick={doReset} disabled={loading}>
-                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-                Reset Password
-              </Button>
-            )}
-          </CardFooter>
+            <CardFooter className="flex flex-col gap-3">
+              {step === "email" ? (
+                <Button className="w-full" type="submit" disabled={loading}>
+                  {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Verify Email
+                </Button>
+              ) : (
+                <Button className="w-full" type="submit" disabled={loading}>
+                  {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Reset Password
+                </Button>
+              )}
+            </CardFooter>
+          </form>
         </Card>
       </div>
     </>
