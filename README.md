@@ -90,6 +90,8 @@ Feel free to register with a throw-away address and play – no credit card, no 
 
 > [!CAUTION]
 > The demo may be down periodically due to inactivity or maintenance. If you encounter issues, please try again later or deploy your own instance using the instructions below. Please don't rely on the demo for production use, as it may not always be available!
+>
+> Also, the demo instance is automatically powered off after periods of inactivity. If you find it down, please allow a few minutes for it to spin back up.
 
 ## ✨ Feature Highlights
 
