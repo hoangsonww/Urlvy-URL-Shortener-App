@@ -32,6 +32,7 @@ import {
   GitBranch,
   Star,
   Link2,
+  Sparkles,
 } from "lucide-react";
 
 function useCountUp(target: number, duration = 1200) {
@@ -83,6 +84,11 @@ const features = [
     icon: <Globe className="h-6 w-6" />,
     title: "Track clicks globally",
     desc: "See who clicked, where they are, and when they did.",
+  },
+  {
+    icon: <Sparkles className="h-6 w-6" />,
+    title: "Smart growth insights",
+    desc: "Automatic recommendations that highlight timing, hero links and stale content.",
   },
 ];
 
