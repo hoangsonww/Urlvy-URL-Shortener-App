@@ -8,6 +8,14 @@ resource "aws_s3_bucket" "site" {
   }
 }
 
+resource "aws_s3_bucket_versioning" "site_versioning" {
+  bucket = aws_s3_bucket.site.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_policy" "site_policy" {
   bucket = aws_s3_bucket.site.id
 
@@ -20,6 +28,23 @@ resource "aws_s3_bucket_policy" "site_policy" {
       Resource  = "${aws_s3_bucket.site.arn}/*"
     }]
   })
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "site_lifecycle" {
+  bucket = aws_s3_bucket.site.id
+
+  rule {
+    id     = "expire-old-objects"
+    status = "Enabled"
+
+    noncurrent_version_expiration {
+      noncurrent_days = 90
+    }
+
+    expiration {
+      expired_object_delete_marker = true
+    }
+  }
 }
 
 resource "aws_cloudfront_distribution" "cdn" {

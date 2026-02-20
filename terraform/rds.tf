@@ -37,4 +37,5 @@ resource "aws_db_instance" "postgres" {
   db_subnet_group_name   = aws_db_subnet_group.db_subnets.name
   skip_final_snapshot    = true
   publicly_accessible    = false
+  storage_encrypted      = true
 }

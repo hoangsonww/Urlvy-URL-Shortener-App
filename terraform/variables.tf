@@ -49,3 +49,19 @@ variable "ecs_desired_count" {
   type    = number
   default = 2
 }
+
+variable "monthly_budget_limit" {
+  type        = number
+  default     = 50
+  description = "Monthly AWS cost budget limit in USD. An alert is sent at 80% of this value."
+}
+
+variable "budget_alert_email" {
+  type        = string
+  description = "Email address to receive AWS budget alert notifications."
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", var.budget_alert_email))
+    error_message = "The budget_alert_email value must be a valid email address."
+  }
+}
