@@ -177,25 +177,19 @@ style AIService fill:#dcd0ff,stroke:#333
 ### URL Details
 
 <p align="center">
-  <img src="docs/link-detail.png" alt="URL Details" width="100%">
+  <img src="docs/link-details.png" alt="URL Details" width="100%">
 </p>
 
 ### Visualizations
 
 <p align="center">
-  <img src="docs/charts.png" alt="Visualizations" width="100%">
+  <img src="docs/visualizations.png" alt="Visualizations" width="100%">
 </p>
 
 ### AI Chat
 
 <p align="center">
   <img src="docs/chatbot.png" alt="AI Chat" width="100%">
-</p>
-
-### Dark Mode
-
-<p align="center">
-  <img src="docs/dark.png" alt="Dark Mode" width="100%">
 </p>
 
 ### Login & Register & Reset Password
