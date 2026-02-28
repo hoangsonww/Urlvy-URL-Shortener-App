@@ -71,7 +71,7 @@ export default function Document() {
         {/* sitemap hint */}
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </Head>
-      <body className="antialiased bg-white text-gray-900">
+      <body className="antialiased">
         <Main />
         <NextScript />
       </body>

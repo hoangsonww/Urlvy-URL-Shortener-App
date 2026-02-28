@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import Link from "next/link";
 import { api } from "@/lib/api";
 import {
   Card,
@@ -16,7 +16,8 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/PasswordInput";
 import { useAuth } from "@/context/Auth";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
+import AuthShell from "@/components/AuthShell";
 
 export default function Register() {
   const { login } = useAuth();
@@ -60,59 +61,108 @@ export default function Register() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Register — Urlvy</title>
-        <meta
-          name="description"
-          content="Create an account to manage your shortened URLs and view their stats"
-        />
-      </Head>
-
-      <div className="flex min-h-[calc(100vh-120px)] items-center justify-center px-4">
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle>Create account</CardTitle>
+    <AuthShell
+      title="Create your workspace"
+      description="Set up your Urlvy account and start publishing branded short links with analytics and AI-generated context."
+      eyebrow="New workspace"
+      pageTitle="Register — Urlvy"
+      pageDescription="Create an account to manage your shortened URLs and view their stats"
+      asideTitle="Turn link management into a polished operating surface"
+      asideDescription="The upgraded Urlvy experience is built to feel fast and trustworthy from the first session, with production-grade visual consistency across auth, dashboard, and detail pages."
+      asideBullets={[
+        "Launch campaigns with a cleaner creation flow and stronger at-a-glance summaries.",
+        "Move from raw URLs to readable slugs and analytics-ready tracking in one place.",
+        "Stay aligned across desktop and mobile with responsive, clearer workspace layouts.",
+      ]}
+      footer={
+        <p className="text-sm text-muted-foreground">
+          Already have an account?{" "}
+          <Link
+            href="/auth/login"
+            className="font-medium text-foreground hover:text-primary"
+          >
+            Log in instead
+          </Link>
+        </p>
+      }
+    >
+      <Card className="relative overflow-hidden border-border/70 bg-card py-0 shadow-none">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklab,var(--color-primary)_16%,transparent),transparent_52%),linear-gradient(180deg,color-mix(in_oklab,var(--color-primary)_10%,var(--color-card)_90%)_0%,color-mix(in_oklab,var(--color-card)_94%,var(--color-chart-2)_6%)_58%,color-mix(in_oklab,var(--color-card)_98%,transparent)_100%)]" />
+        <form onSubmit={handleSubmit} className="relative">
+          <CardHeader className="border-b border-border/70 pb-5">
+            <CardTitle className="text-xl">Start free</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Create an account to manage links, stats, and AI summaries from
+              one dashboard.
+            </p>
           </CardHeader>
 
-          <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
+          <CardContent className="space-y-5 pt-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="email">
+                Email address
+              </label>
               <Input
-                placeholder="Email"
+                id="email"
+                placeholder="name@company.com"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
+                autoComplete="email"
               />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="password">
+                Password
+              </label>
               <PasswordInput
-                placeholder="Password"
+                id="password"
+                placeholder="Create a secure password"
                 value={pw1}
                 onChange={(e) => setPw1(e.target.value)}
                 disabled={loading}
+                autoComplete="new-password"
               />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="confirm-password">
+                Confirm password
+              </label>
               <PasswordInput
-                placeholder="Confirm password"
+                id="confirm-password"
+                placeholder="Repeat your password"
                 value={pw2}
                 onChange={(e) => setPw2(e.target.value)}
                 disabled={loading}
+                autoComplete="new-password"
               />
-            </CardContent>
+            </div>
+          </CardContent>
 
-            <CardFooter className="flex flex-col gap-3">
-              <Button className="w-full" type="submit" disabled={loading}>
-                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-                {loading ? "Creating…" : "Sign Up"}
-              </Button>
-              <p className="text-xs text-center">
-                Have an account?{" "}
-                <a href="/auth/login" className="underline hover:text-primary">
-                  Log in
-                </a>
-              </p>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
-    </>
+          <CardFooter className="flex-col items-stretch gap-3 border-t border-border/70 pt-5">
+            <Button className="w-full" type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Creating account
+                </>
+              ) : (
+                <>
+                  Create workspace
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </Button>
+            <p className="text-xs leading-5 text-muted-foreground">
+              You’ll be signed in immediately after registration and redirected
+              to the dashboard.
+            </p>
+          </CardFooter>
+        </form>
+      </Card>
+    </AuthShell>
   );
 }
