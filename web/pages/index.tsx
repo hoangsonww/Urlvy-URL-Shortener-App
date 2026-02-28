@@ -368,38 +368,17 @@ export default function Landing() {
     const root =
       document.querySelector<HTMLElement>("[data-reveal-root]") ??
       document.body;
-    const revealTargets = Array.from(root.querySelectorAll<HTMLElement>("*"))
-      .filter((el) => el !== root)
-      .filter(
-        (el) =>
-          !["SCRIPT", "STYLE", "NOSCRIPT"].includes(el.tagName) &&
-          !el.classList.contains("reveal-ignore"),
-      );
+    const revealTargets = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-reveal]"),
+    ).filter((el) => !el.classList.contains("reveal-ignore"));
     if (!revealTargets.length) return;
 
     const reveal = (el: Element) => {
       el.classList.add("reveal-in");
+      el.classList.remove("reveal-pending");
     };
 
     revealTargets.forEach((el) => el.classList.add("reveal-pending"));
-
-    let ticking = false;
-    const revealInView = () => {
-      const vh = window.innerHeight || 0;
-      revealTargets.forEach((el) => {
-        if (!el.classList.contains("reveal-pending")) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top < vh * 0.92 && rect.bottom > 0) reveal(el);
-      });
-    };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-        revealInView();
-      });
-    };
 
     if (
       !("IntersectionObserver" in window) ||
@@ -419,22 +398,15 @@ export default function Landing() {
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.18, rootMargin: "0px 0px -12% 0px" },
+      { threshold: 0.1, rootMargin: "0px 0px -8% 0px" },
     );
 
     requestAnimationFrame(() => {
       revealTargets.forEach((el) => observer.observe(el));
-      requestAnimationFrame(() => {
-        revealInView();
-      });
     });
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
     };
   }, []);
 
@@ -592,6 +564,7 @@ export default function Landing() {
 
         {/* FEATURES GRID  */}
         <Section
+          id="features"
           kicker="Platform"
           title="Everything you need to win clicks"
           subtitle="A single workspace to shorten, brand, measure, and optimize — without extra scripts."
@@ -600,7 +573,7 @@ export default function Landing() {
             {features.map((f, i) => (
               <Card
                 key={f.title}
-                className="group hover:-translate-y-2 hover:shadow-xl transition"
+                className="group hover:shadow-xl transition"
                 data-reveal
                 data-reveal-parent
                 style={revealStyle(i * 70)}
@@ -709,7 +682,7 @@ export default function Landing() {
             {playbooks.map((p, i) => (
               <Card
                 key={p.title}
-                className="w-full hover:-translate-y-2 hover:shadow-xl transition"
+                className="w-full hover:shadow-xl transition"
                 data-reveal
                 data-reveal-parent
                 style={revealStyle(i * 80)}
@@ -765,6 +738,7 @@ export default function Landing() {
 
         {/* CAROUSEL: INSIGHTS */}
         <Section
+          id="analytics"
           kicker="Analytics"
           title="Insight modules that stay in sync"
           subtitle="The metrics you need, presented as focused modules that scale with your team."
@@ -773,7 +747,7 @@ export default function Landing() {
             {insightModules.map((p, i) => (
               <Card
                 key={p.title}
-                className="w-full hover:-translate-y-2 hover:shadow-xl transition"
+                className="w-full hover:shadow-xl transition"
                 data-reveal
                 data-reveal-parent
                 style={revealStyle(i * 80)}
@@ -828,6 +802,7 @@ export default function Landing() {
 
         {/* SECURITY */}
         <Section
+          id="security"
           kicker="Security"
           title="Governance built for enterprise"
           subtitle="Professional-grade controls that keep every team aligned and compliant."
@@ -836,7 +811,7 @@ export default function Landing() {
             {securityPillars.map((pillar, i) => (
               <Card
                 key={pillar.title}
-                className="hover:-translate-y-2 hover:shadow-xl transition"
+                className="hover:shadow-xl transition"
                 data-reveal
                 data-reveal-parent
                 style={revealStyle(i * 70)}
@@ -876,7 +851,7 @@ export default function Landing() {
               {testimonials.map(([msg, name, role], i) => (
                 <Card
                   key={name}
-                  className="hover:shadow-lg hover:-translate-y-2 transition"
+                  className="hover:shadow-lg transition"
                   data-reveal
                   data-reveal-parent
                   style={revealStyle(i * 80)}
@@ -1025,45 +1000,40 @@ export default function Landing() {
             transform: translate3d(0, 0, 0);
           }
           50% {
-            transform: translate3d(0, -18px, 0);
+            transform: translate3d(0, -8px, 0);
           }
         }
         .animate-gradient {
-          animation: gradientShift 18s linear infinite;
+          animation: gradientShift 28s linear infinite;
         }
         .animate-float {
-          animation: floatSoft 12s ease-in-out infinite;
+          animation: floatSoft 18s ease-in-out infinite;
         }
         .animate-float-delayed {
-          animation: floatSoft 14s ease-in-out infinite;
-          animation-delay: -3s;
+          animation: floatSoft 22s ease-in-out infinite;
+          animation-delay: -4s;
         }
         [data-reveal-root] .reveal-pending {
           opacity: 0;
-          transform: translateY(12px);
-          filter: blur(2px);
+          transform: translateY(8px);
           transition:
-            opacity 0.65s ease,
-            transform 0.65s ease,
-            filter 0.65s ease;
+            opacity 0.45s ease,
+            transform 0.45s ease;
           transition-delay: var(--delay, 0ms);
           will-change: opacity, transform;
         }
         [data-reveal-root] .reveal-in {
           opacity: 1;
-          transform: translateY(0) scale(1);
-          filter: blur(0);
+          transform: translateY(0);
           transition:
-            opacity 0.65s ease,
-            transform 0.65s ease,
-            filter 0.65s ease;
+            opacity 0.45s ease,
+            transform 0.45s ease;
           transition-delay: var(--delay, 0ms);
         }
         @media (prefers-reduced-motion: reduce) {
           [data-reveal-root] .reveal-pending {
             opacity: 1;
             transform: none;
-            filter: none;
             transition: none;
           }
           .animate-gradient,
@@ -1172,7 +1142,7 @@ function StatTile({
   const display = format ? format(count.val) : count.val.toLocaleString();
   return (
     <Card
-      className="p-6 hover:-translate-y-2 hover:shadow-xl transition"
+      className="p-6 hover:shadow-xl transition"
       data-reveal
       data-reveal-parent
       style={revealStyle(delay)}
@@ -1202,7 +1172,7 @@ function UseCase({
 }) {
   return (
     <Card
-      className="hover:-translate-y-2 hover:shadow-xl transition"
+      className="hover:shadow-xl transition"
       data-reveal
       data-reveal-parent
       style={revealStyle(delay)}

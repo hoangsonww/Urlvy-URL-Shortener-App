@@ -1,17 +1,10 @@
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
-import { Outfit } from "next/font/google";
 import Layout from "@/components/Layout";
 import { AuthProvider } from "@/context/Auth";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
 import MetaUpdater from "@/components/MetaUpdater";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,9 +13,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <MetaUpdater />
 
       <AuthProvider>
-        <main
-          className={`${outfit.variable} flex min-h-screen flex-col font-sans`}
-        >
+        <main className="flex min-h-screen flex-col font-sans">
           <Analytics />
           <Layout>
             <Component {...pageProps} />
