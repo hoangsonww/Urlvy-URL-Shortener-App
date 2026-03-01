@@ -44,7 +44,7 @@ export default function Footer() {
             </div>
 
             <div className="surface-muted flex items-center gap-3 px-4 py-3">
-              <ShieldCheck className="h-5 w-5 text-primary" />
+              <ShieldCheck className="h-6 w-6 shrink-0 text-primary" />
               <p className="text-sm text-muted-foreground">
                 Built for modern teams that need reliable redirects and readable
                 campaign intelligence.
@@ -115,7 +115,7 @@ export default function Footer() {
               ))}
             </div>
             <div className="surface-muted flex items-start gap-3 px-4 py-3">
-              <FileText className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <FileText className="mt-0.5 h-6 w-6 shrink-0 text-primary" />
               <p className="text-sm text-muted-foreground">
                 Product-specific legal pages covering redirects, analytics, AI
                 summaries, and local browser storage.
