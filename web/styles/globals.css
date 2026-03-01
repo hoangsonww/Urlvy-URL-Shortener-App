@@ -340,6 +340,30 @@ textarea {
   @apply text-sm text-muted-foreground;
 }
 
+.legal-copy h2 {
+  @apply mt-0 text-2xl font-semibold tracking-tight text-foreground;
+}
+
+.legal-copy h3 {
+  @apply mt-8 text-lg font-semibold text-foreground;
+}
+
+.legal-copy p {
+  @apply mt-3 text-sm leading-7 text-muted-foreground;
+}
+
+.legal-copy ul {
+  @apply mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-muted-foreground;
+}
+
+.legal-copy li {
+  @apply pl-1;
+}
+
+.legal-copy a {
+  @apply font-medium text-primary hover:text-primary/80;
+}
+
 .hero-grid {
   @apply grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start;
 }
