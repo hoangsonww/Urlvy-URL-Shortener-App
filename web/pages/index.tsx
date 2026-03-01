@@ -979,6 +979,26 @@ export default function Landing() {
                 Start free
               </Button>
             </Link>
+            <p
+              className="mx-auto max-w-2xl text-xs leading-6 text-muted-foreground mt-6"
+              data-reveal
+            >
+              Review our{" "}
+              <Link
+                href="/terms"
+                className="font-medium text-foreground hover:text-primary"
+              >
+                Terms &amp; Conditions
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="font-medium text-foreground hover:text-primary"
+              >
+                Privacy Policy
+              </Link>{" "}
+              before using the platform.
+            </p>
           </div>
         </section>
       </main>

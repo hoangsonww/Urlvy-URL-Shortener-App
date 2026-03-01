@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { Github, Linkedin, Link2, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  FileText,
+  Github,
+  Linkedin,
+  Link2,
+  ShieldCheck,
+} from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -13,11 +20,15 @@ export default function Footer() {
     { href: "/auth/register", label: "Create Account" },
     { href: "/app/links", label: "Dashboard" },
   ];
+  const legalLinks = [
+    { href: "/terms", label: "Terms & Conditions" },
+    { href: "/privacy", label: "Privacy Policy" },
+  ];
 
   return (
     <footer className="mt-auto border-t border-border/70 bg-background/65 backdrop-blur-md">
       <div className="page-shell py-10">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.7fr]">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/20 bg-primary/12 text-primary">
@@ -91,14 +102,25 @@ export default function Footer() {
           </div>
 
           <div className="space-y-3">
-            <div className="eyebrow">
-              <Sparkles className="h-3.5 w-3.5" />
-              Ready for launch
+            <p className="mb-3 text-sm font-semibold">Legal</p>
+            <div className="grid gap-2 text-sm text-muted-foreground">
+              {legalLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
-            <p className="text-sm text-muted-foreground">
-              Designed to feel premium while staying fast, accessible, and
-              consistent across light and dark themes.
-            </p>
+            <div className="surface-muted flex items-start gap-3 px-4 py-3">
+              <FileText className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-sm text-muted-foreground">
+                Product-specific legal pages covering redirects, analytics, AI
+                summaries, and local browser storage.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -115,7 +137,18 @@ export default function Footer() {
             </Link>{" "}
             in {year}.
           </p>
-          <p>Urlvy UI refresh for production-ready usability and polish.</p>
+          <p>
+            <Link
+              href="https://github.com/hoangsonww/Urlvy-URL-Shortener-App"
+              className="inline-flex items-center gap-1 font-medium text-foreground hover:text-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Repository
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            .
+          </p>
         </div>
       </div>
     </footer>
