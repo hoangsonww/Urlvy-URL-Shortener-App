@@ -78,7 +78,7 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-2 lg:flex">
             {!user ? (
-              <div className="mr-2 flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary">
+              <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary">
                 <Sparkles className="h-3.5 w-3.5" />
                 Production-grade redirects and analytics
               </div>

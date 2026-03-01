@@ -44,6 +44,7 @@ import {
   FileText,
   Sparkles,
   ChevronDown,
+  Table2Icon as Table,
 } from "lucide-react";
 
 function useCountUp(target: number, duration = 1400) {
@@ -492,12 +493,10 @@ export default function Landing() {
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Link
-              href="https://urlvy-url-shortener-app.onrender.com/docs"
-              target="_blank"
-            >
+            <Link href="/app/links">
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                API Docs
+                View dashboard
+                <Table className="h-4 w-4" />
               </Button>
             </Link>
           </div>
@@ -977,6 +976,14 @@ export default function Landing() {
             <Link href="/auth/register" data-reveal>
               <Button size="lg" className="w-full sm:w-auto">
                 Start free
+              </Button>
+            </Link>
+            <Link
+              href="https://urlvy-url-shortener-app.onrender.com/docs"
+              target="_blank"
+            >
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                API Docs
               </Button>
             </Link>
             <p
