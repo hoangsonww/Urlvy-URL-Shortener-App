@@ -581,7 +581,7 @@ export default function Landing() {
                   <div className="text-primary">{f.icon}</div>
                   <CardTitle>{f.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-3">
                   <p className="text-sm text-muted-foreground">{f.desc}</p>
                 </CardContent>
               </Card>
@@ -693,7 +693,7 @@ export default function Landing() {
                   </div>
                   <p className="text-sm text-muted-foreground">{p.desc}</p>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pt-3">
                   <div className="text-2xl font-bold text-primary">
                     {p.stat}
                   </div>
@@ -758,7 +758,7 @@ export default function Landing() {
                   </div>
                   <p className="text-sm text-muted-foreground">{p.desc}</p>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-3">
                   <div className="text-lg font-semibold text-primary">
                     {p.stat}
                   </div>
@@ -821,7 +821,7 @@ export default function Landing() {
                   </div>
                   <CardTitle className="text-base">{pillar.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-3">
                   <p className="text-sm text-muted-foreground">{pillar.desc}</p>
                 </CardContent>
               </Card>
@@ -1210,7 +1210,7 @@ function UseCase({
         </div>
         <CardTitle>{h}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 pt-3">
         <p className="text-sm text-muted-foreground text-center">{p}</p>
         <p className="text-xs text-muted-foreground text-center">{d}</p>
       </CardContent>
